@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RepliesController;
 use App\Http\Controllers\ThreadsController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,10 +19,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Auth::routes();
 
 Route::get('/threads', [ThreadsController::class, 'index']);
+
 Route::get('/threads/{thread}', [ThreadsController::class, 'show'])->name('threads.show');
 
-Auth::routes();
+Route::post('/threads/{thread}/replies', [RepliesController::class, 'store'])
+    ->middleware('auth')
+    ->name('threads.store');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
