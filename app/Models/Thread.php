@@ -9,6 +9,8 @@ class Thread extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', 'title', 'body'];
+
     public function path()
     {
         return route('threads.show', $this);

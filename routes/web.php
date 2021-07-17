@@ -23,10 +23,15 @@ Auth::routes();
 
 Route::get('/threads', [ThreadsController::class, 'index']);
 
-Route::get('/threads/{thread}', [ThreadsController::class, 'show'])->name('threads.show');
+Route::post('/threads', [ThreadsController::class, 'store'])
+    ->middleware('auth');
+
+Route::get('/threads/{thread}', [ThreadsController::class, 'show'])
+    ->name('threads.show');
 
 Route::post('/threads/{thread}/replies', [RepliesController::class, 'store'])
     ->middleware('auth')
     ->name('threads.store');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+    ->name('home');
