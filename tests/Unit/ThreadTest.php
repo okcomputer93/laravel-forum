@@ -18,7 +18,7 @@ class ThreadTest extends TestCase
     {
         parent::setUp();
 
-        $this->thread = Thread::factory()->create();
+        $this->thread = create(Thread::class);
     }
 
     /** @test */
@@ -43,7 +43,4 @@ class ThreadTest extends TestCase
 
         $this->assertCount(1, $this->thread->replies);
     }
-
-
-
 }

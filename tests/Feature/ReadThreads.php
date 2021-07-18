@@ -39,14 +39,12 @@ class ReadThreads extends TestCase
     /** @test */
     public function a_user_can_read_replies_that_are_associated_with_a_thread()
     {
-        $reply = Reply::factory()->create([
+        $reply = create(Reply::class, [
             'thread_id' => $this->thread->id
         ]);
 
         $this->get($this->thread->path())
             ->assertSee($reply->body);
     }
-
-
 
 }
