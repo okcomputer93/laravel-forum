@@ -21,9 +21,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::resource('threads', ThreadsController::class);
+Route::get('threads/{channel:slug}/{thread}', [ThreadsController::class, 'show']);
 
-Route::post('/threads/{thread}/replies', [RepliesController::class, 'store'])
+Route::resource('threads', ThreadsController::class)
+    ->except('show');
+
+Route::post('/threads/{channel:slug}/{thread}/replies', [RepliesController::class, 'store'])
     ->middleware('auth')
     ->name('threads.store');
 

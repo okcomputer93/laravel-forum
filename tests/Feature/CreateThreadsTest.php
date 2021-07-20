@@ -3,8 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\Thread;
-use App\Models\User;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -21,10 +19,12 @@ class CreateThreadsTest extends TestCase
         $this->get('/threads/create')
             ->assertRedirect('/login');
     }
-    
+
     /** @test */
     public function an_authenticated_user_can_create_new_forum_threads()
     {
+        $this->withoutExceptionHandling();
+
         $this->signIn();
 
         $thread = raw(Thread::class);
