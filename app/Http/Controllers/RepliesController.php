@@ -8,8 +8,12 @@ use Illuminate\Http\Request;
 
 class RepliesController extends Controller
 {
-    public function store(Channel $channel, Thread $thread)
+    public function store(Channel $channel, Thread $thread, Request $request)
     {
+        $request->validate([
+            'body' => ['required']
+        ]);
+
         $thread->addReply([
             'body' => request('body'),
             'user_id' => auth()->id()

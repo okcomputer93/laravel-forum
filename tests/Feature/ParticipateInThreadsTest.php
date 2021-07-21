@@ -4,13 +4,10 @@ namespace Tests\Feature;
 
 use App\Models\Reply;
 use App\Models\Thread;
-use App\Models\User;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class ParticipateInForumTest extends TestCase
+class ParticipateInThreadsTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -31,11 +28,25 @@ class ParticipateInForumTest extends TestCase
 
         $thread = create(Thread::class);
 
-        $reply = Reply::factory()->raw();
+        $reply = raw(Reply::class);
 
         $this->post($thread->path() . '/replies', $reply);
 
         $this->get($thread->path())
             ->assertSee($reply['body']);
     }
+
+    /** @test */
+    public function a_reply_requires_a_body()
+    {
+        $this->signIn();
+
+        $thread = create(Thread::class);
+
+        $reply = raw(Reply::class, ['body' => null]);
+
+        $this->post($thread->path() . '/replies', $reply)
+            ->assertSessionHasErrors('body');
+    }
+
 }

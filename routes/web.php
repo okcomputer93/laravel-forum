@@ -27,8 +27,7 @@ Route::resource('threads', ThreadsController::class)
     ->except('show');
 
 Route::post('/threads/{channel:slug}/{thread}/replies', [RepliesController::class, 'store'])
-    ->middleware('auth')
-    ->name('threads.store');
+    ->middleware('auth');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home');
