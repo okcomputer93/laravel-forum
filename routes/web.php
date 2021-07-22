@@ -21,13 +21,17 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+    ->name('home');
+
 Route::get('threads/{channel:slug}/{thread}', [ThreadsController::class, 'show']);
 
 Route::resource('threads', ThreadsController::class)
     ->except('show');
 
-Route::post('/threads/{channel:slug}/{thread}/replies', [RepliesController::class, 'store'])
+Route::get('threads/{channel:slug}', [ThreadsController::class, 'index']);
+
+Route::post('threads/{channel:slug}/{thread}/replies', [RepliesController::class, 'store'])
     ->middleware('auth');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
-    ->name('home');
