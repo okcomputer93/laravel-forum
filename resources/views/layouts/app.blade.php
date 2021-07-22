@@ -38,6 +38,12 @@
                         </li>
                     </ul>
 
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/threads/create">New Thread</a>
+                        </li>
+                    </ul>
+
                     <div class="dropdown show">
                         <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Channels
