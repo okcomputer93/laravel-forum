@@ -25,7 +25,7 @@
                                         Select One...
                                     </option>
 
-                                    @foreach(\App\Models\Channel::all() as $channel)
+                                    @foreach($channels as $channel)
 
                                         <option value="{{ $channel->id }}"
                                                 @if (old('channel_id') === strval($channel->id))
