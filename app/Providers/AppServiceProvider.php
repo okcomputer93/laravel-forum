@@ -25,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::share('channels', Channel::all());
+        // This runs before database migrations on tests
+        // View::share('channels', Channel::all());
+
+        View::composer('*', function ($view) {
+            $view->with('channels', Channel::all());
+        });
     }
 }
