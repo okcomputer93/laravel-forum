@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Filters\ThreadFilters;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +12,11 @@ class Thread extends Model
     use HasFactory;
 
     protected $fillable = ['user_id', 'title', 'body', 'channel_id'];
+
+    public function scopeFilter(Builder $query, ThreadFilters $filters)
+    {
+        return $filters->apply($query);
+    }
 
     public function path()
     {
