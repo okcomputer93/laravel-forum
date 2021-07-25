@@ -13,6 +13,16 @@ class Thread extends Model
 
     protected $fillable = ['user_id', 'title', 'body', 'channel_id'];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('replyCount', function (Builder $query) {
+            $query->withCount('replies');
+        });
+    }
+
+
     public function scopeFilter(Builder $query, ThreadFilters $filters)
     {
         return $filters->apply($query);
