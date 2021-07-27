@@ -1,17 +1,29 @@
 <?php
 
-function create($class, $attributes = [])
+function create($class, $attributes = [], $times = null)
 {
-    return $class::factory()->create($attributes);
+    $configuration = $class::factory();
+    if ($times) {
+        $configuration = $configuration->count($times);
+    }
+    return $configuration->create($attributes);
 }
 
 
-function make($class, $attributes = [])
+function make($class, $attributes = [], $times = null)
 {
-    return $class::factory()->make($attributes);
+    $configuration = $class::factory();
+    if ($times) {
+        $configuration = $configuration->count($times);
+    }
+    return $configuration->make($attributes);
 }
 
-function raw($class, $attributes = [])
+function raw($class, $attributes = [], $times = null)
 {
-    return $class::factory()->raw($attributes);
+    $configuration = $class::factory();
+    if ($times) {
+        $configuration = $configuration->count($times);
+    }
+    return $configuration->raw($attributes);
 }
