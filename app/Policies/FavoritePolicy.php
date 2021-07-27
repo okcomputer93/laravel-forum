@@ -12,9 +12,7 @@ class FavoritePolicy
 
     public function favoriteReply(User $user, Reply $reply)
     {
-        return ! $reply->favorites()
-            ->where(['user_id' => $user->id])
-            ->exists();
+        return ! $reply->isFavorited();
     }
 
 }
