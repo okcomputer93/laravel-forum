@@ -2,7 +2,7 @@
     <div class="card-header">
        <div class="level">
            <div>
-               <a href="#">{{ $reply->owner->name }}</a> said
+               <a href="/profiles/{{ $reply->owner->name }}">{{ $reply->owner->name }}</a> said
                {{ $reply->created_at->diffForHumans() }}:
            </div>
 

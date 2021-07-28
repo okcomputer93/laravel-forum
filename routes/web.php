@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FavoritesController;
+use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\RepliesController;
 use App\Http\Controllers\ThreadsController;
 use Illuminate\Support\Facades\Route;
@@ -39,3 +40,4 @@ Route::post('threads/{channel:slug}/{thread}/replies', [RepliesController::class
 Route::post('replies/{reply}/favorites', [FavoritesController::class, 'store'])
     ->middleware('auth');
 
+Route::get('/profiles/{user:name}', [ProfilesController::class, 'show']);
