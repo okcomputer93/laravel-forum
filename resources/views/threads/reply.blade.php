@@ -7,18 +7,16 @@
            </div>
 
            @auth
-               <div>
-                   <form method="post" action="/replies/{{ $reply->id }}/favorites">
-                       @csrf
-                       <button type="submit" class="btn btn-outline-secondary"
-                               @if($reply->isFavorited())
-                                   disabled
-                               @endif
-                       >
-                           {{ $reply->favorites()->count() }} {{ Str::plural('Favorite', $reply->favorites()->count()) }}
-                       </button>
-                   </form>
-               </div>
+               <form method="post" action="/replies/{{ $reply->id }}/favorites">
+                   @csrf
+                   <button type="submit" class="btn btn-outline-secondary"
+                           @if( $reply->isFavorited() )
+                               disabled
+                           @endif
+                   >
+                       {{ $reply->favorites_count }} {{ Str::plural('Favorite', $reply->favorites_count) }}
+                   </button>
+               </form>
            @endauth
        </div>
     </div>
