@@ -29,8 +29,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
 
 Route::get('threads/{channel:slug}/{thread}', [ThreadsController::class, 'show']);
 
+Route::delete('threads/{channel:slug}/{thread}', [ThreadsController::class, 'destroy']);
+
 Route::resource('threads', ThreadsController::class)
-    ->except('show');
+    ->except('show', 'destroy');
 
 Route::get('threads/{channel:slug}', [ThreadsController::class, 'index']);
 
@@ -40,4 +42,5 @@ Route::post('threads/{channel:slug}/{thread}/replies', [RepliesController::class
 Route::post('replies/{reply}/favorites', [FavoritesController::class, 'store'])
     ->middleware('auth');
 
-Route::get('/profiles/{user:name}', [ProfilesController::class, 'show']);
+Route::get('/profiles/{user:name}', [ProfilesController::class, 'show'])
+    ->name('profile');
