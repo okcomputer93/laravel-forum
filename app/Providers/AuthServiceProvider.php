@@ -3,7 +3,10 @@
 namespace App\Providers;
 
 use App\Models\Favorite;
+use App\Models\Thread;
+use App\Models\User;
 use App\Policies\FavoritePolicy;
+use App\Policies\ThreadPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -16,7 +19,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
-        Favorite::class => FavoritePolicy::class
+        Favorite::class => FavoritePolicy::class,
+        Thread::class => ThreadPolicy::class
     ];
 
     /**
@@ -28,6 +32,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::before(function (User $user) {
+            if ($user->name === 'John Doe') {
+                return true;
+            }
+        });
     }
 }
