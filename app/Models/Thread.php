@@ -22,6 +22,10 @@ class Thread extends Model
         static::addGlobalScope('replyCount', function (Builder $query) {
             $query->withCount('replies');
         });
+
+        static::deleting(function ($thread) {
+            $thread->replies->each->delete();
+        });
     }
 
     public function scopeFilter(Builder $query, ThreadFilters $filters)
