@@ -6,37 +6,14 @@
             <div class="col-md-8 offset-md-2">
                 <h1 class="p-3 mt-2 mb-1 border-bottom">
                     {{ $profileUser->name }}
-                    <small class="text-muted">
-                        Since {{ $profileUser->created_at->diffForHumans() }}
-                    </small>
                 </h1>
 
-                @foreach ($threads as $thread)
-                    <div class="card mt-4">
-                        <div class="card-header">
-                            <div class="level">
-                        <span>
-                            <a href="{{ route('profile', $thread->creator) }}">
-                                {{  $thread->creator->name  }}
-                            </a> posted:
-                            <a href="{{ $thread->path() }}">
-                                {{ $thread->title }}
-                            </a>
-                        </span>
-                                <span>
-                            {{ $thread->created_at->diffForHumans() }}
-                        </span>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            {{ $thread->body }}
-                        </div>
-                    </div>
+                @foreach ($activities as $date => $activity)
+                    <h3 class="mt-4 text-muted">{{ $date }}</h3>
+                    @foreach ($activity as $record)
+                        @include("profiles.activities.$record->type", ['activity' => $record])
+                    @endforeach
                 @endforeach
-
-                <div class="mt-4">
-                    {{ $threads->links() }}
-                </div>
             </div>
 
         </div>

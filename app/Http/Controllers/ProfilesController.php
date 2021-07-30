@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -11,6 +12,6 @@ class ProfilesController extends Controller
     {
         return view('profiles.show')
             ->withProfileUser($user)
-            ->withThreads($user->threads()->paginate(30));
+            ->withActivities(Activity::feed($user));
     }
 }
