@@ -13,7 +13,7 @@ trait RecordsActivity
     protected static function bootRecordsActivity()
     {
         if (auth()->guest()) return;
-       foreach (static::getActivitiesToRecord() as $event) {
+        foreach (static::getActivitiesToRecord() as $event) {
            static::$event(function ($model) use ($event) {
                $model->recordActivity($event);
            });
@@ -38,6 +38,18 @@ trait RecordsActivity
     {
         $type = strtolower((new ReflectionClass($this))->getShortName());
         return "{$event}_$type";
+    }
+
+    /**
+     * Records into Activity model.
+     * @param string $event
+     */
+    protected function recordActivity(string $event)
+    {
+        $this->activity()->create([
+            'user_id' => auth()->id(),
+            'type' => $this->getActivityType($event),
+        ]);
     }
 
     /**
