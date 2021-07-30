@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
-    use HasFactory;
+    use HasFactory, RecordsActivity;
 
     protected $fillable = ['user_id', 'title', 'body', 'channel_id'];
 
@@ -23,7 +23,6 @@ class Thread extends Model
             $query->withCount('replies');
         });
     }
-
 
     public function scopeFilter(Builder $query, ThreadFilters $filters)
     {
