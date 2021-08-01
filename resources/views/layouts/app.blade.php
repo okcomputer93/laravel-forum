@@ -29,6 +29,10 @@
             align-items: center;
             justify-content: space-between;
         }
+
+        [v-cloak] {
+            display: none;
+        }
     </style>
 </head>
 <body >

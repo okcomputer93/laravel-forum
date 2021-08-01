@@ -42,6 +42,9 @@ Route::post('threads/{channel:slug}/{thread}/replies', [RepliesController::class
 Route::delete('replies/{reply}', [RepliesController::class, 'destroy'])
     ->middleware('auth');
 
+Route::patch('replies/{reply}', [RepliesController::class, 'update'])
+    ->middleware('auth');
+
 Route::post('replies/{reply}/favorites', [FavoritesController::class, 'store'])
     ->middleware('auth');
 

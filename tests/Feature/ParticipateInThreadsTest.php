@@ -64,7 +64,7 @@ class ParticipateInThreadsTest extends TestCase
     }
 
     /** @test */
-    public function authorized_users_can_delete_Replies()
+    public function authorized_users_can_delete_replies()
     {
         $this->signIn();
 
@@ -75,4 +75,45 @@ class ParticipateInThreadsTest extends TestCase
 
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
     }
+
+    /** @test */
+    public function authorized_users_can_update_replies()
+    {
+        $this->signIn();
+
+        $reply = create(Reply::class, ['user_id' => auth()->user()]);
+
+        $this->patch("replies/$reply->id", [
+            'body' => $body = 'Updated'
+        ])->assertStatus(200);
+
+        $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => $body]);
+    }
+
+    /** @test */
+    public function unauthorized_users_cannot_update_replies()
+    {
+        $reply = create(Reply::class);
+
+        $this->patch("/replies/$reply->id")
+            ->assertRedirect('login');
+
+        $this->signIn();
+
+        $this->patch("/replies/$reply->id")
+            ->assertStatus(403);
+    }
+
+    /** @test */
+    public function update_a_reply_requires_a_body()
+    {
+        $this->signIn();
+
+        $reply = create(Reply::class, ['user_id' => auth()->id()]);
+
+        $this->patch("/replies/$reply->id", [
+            'body' => null
+        ])->assertSessionHasErrors('body');
+    }
+
 }
