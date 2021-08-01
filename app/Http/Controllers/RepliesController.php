@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Channel;
+use App\Models\Reply;
 use App\Models\Thread;
 use Illuminate\Http\Request;
 
@@ -21,5 +22,14 @@ class RepliesController extends Controller
 
         return redirect($thread->path())
             ->with('flash', 'Your reply has been left.');
+    }
+
+    public function destroy(Reply $reply)
+    {
+        $this->authorize($reply);
+
+        $reply->delete();
+
+        return back();
     }
 }

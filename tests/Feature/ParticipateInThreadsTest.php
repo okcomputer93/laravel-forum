@@ -49,4 +49,30 @@ class ParticipateInThreadsTest extends TestCase
             ->assertSessionHasErrors('body');
     }
 
+    /** @test */
+    public function unauthorized_users_cannot_delete_replies()
+    {
+        $reply = create(Reply::class);
+
+        $this->delete("/replies/$reply->id")
+            ->assertRedirect('login');
+
+        $this->signIn();
+
+        $this->delete("/replies/$reply->id")
+            ->assertStatus(403);
+    }
+
+    /** @test */
+    public function authorized_users_can_delete_Replies()
+    {
+        $this->signIn();
+
+        $reply = create(Reply::class, ['user_id' => auth()->id()]);
+
+        $this->delete("/replies/$reply->id")
+            ->assertStatus(302);
+
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+    }
 }
