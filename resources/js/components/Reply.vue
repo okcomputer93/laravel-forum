@@ -18,6 +18,12 @@ export default {
             this.editing = false;
 
             flash('Updated!');
+        },
+        async destroy() {
+            await axios.delete(`/replies/${this.attributes.id}`)
+            flash('Your reply has been deleted.');
+            this.$destroy();
+            this.$el.parentNode.removeChild(this.$el);
         }
     }
 }

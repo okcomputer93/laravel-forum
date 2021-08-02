@@ -35,11 +35,15 @@ class RepliesController extends Controller
         );
     }
 
-    public function destroy(Reply $reply)
+    public function destroy(Reply $reply, Request $request)
     {
         $this->authorize($reply);
 
         $reply->delete();
+
+        if ($request->wantsJson()) {
+            return  response(['status' => 'Reply deleted']);
+        }
 
         return back();
     }
