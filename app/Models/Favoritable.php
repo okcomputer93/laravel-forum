@@ -28,6 +28,15 @@ trait Favoritable
     }
 
     /**
+     * @return bool
+     */
+    public function getIsFavoritedAttribute(): bool
+    {
+        return $this->isFavorited();
+
+    }
+
+    /**
      * Favorite the current reply.
      */
     public function favorite()
@@ -35,6 +44,14 @@ trait Favoritable
         $this->favorites()->create([
             'user_id' => auth()->id()
         ]);
+    }
+
+    /**
+     * Unfavorite the current reply.
+     */
+    public function unfavorite()
+    {
+        $this->favorites()->where('user_id', auth()->id())->delete();
     }
 
     /**

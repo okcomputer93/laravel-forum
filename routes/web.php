@@ -48,5 +48,8 @@ Route::patch('replies/{reply}', [RepliesController::class, 'update'])
 Route::post('replies/{reply}/favorites', [FavoritesController::class, 'store'])
     ->middleware('auth');
 
+Route::delete('replies/{reply}/favorites', [FavoritesController::class, 'destroy'])
+    ->middleware('auth');
+
 Route::get('/profiles/{user:name}', [ProfilesController::class, 'show'])
     ->name('profile');

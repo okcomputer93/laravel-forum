@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class FavoritesController extends Controller
 {
-    public function store(Reply $reply)
+    public function store(Reply $reply, Request $request)
     {
         $this->authorize(
             'favorite-reply',
@@ -16,6 +16,21 @@ class FavoritesController extends Controller
         );
 
         $reply->favorite();
+
+        if ($request->wantsJson()) {
+            return  response(['status' => 'Reply favorited']);
+        }
+
+        return back();
+    }
+
+    public function destroy(Reply $reply, Request $request)
+    {
+        $reply->unfavorite();
+
+        if ($request->wantsJson()) {
+            return  response(['status' => 'Reply unfavorited']);
+        }
 
         return back();
     }
