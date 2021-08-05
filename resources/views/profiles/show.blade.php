@@ -8,14 +8,16 @@
                     {{ $profileUser->name }}
                 </h1>
 
-                @foreach ($activities as $date => $activity)
+                @forelse ($activities as $date => $activity)
                     <h3 class="mt-4 text-muted">{{ $date }}</h3>
                     @foreach ($activity as $record)
                         @if (view()->exists("profiles.activities.$record->type"))
                             @include("profiles.activities.$record->type", ['activity' => $record])
                         @endif
                     @endforeach
-                @endforeach
+                @empty
+                    <p class="text-muted mt-4">There's no activity for this user yet.</p>
+                @endforelse
             </div>
 
         </div>
