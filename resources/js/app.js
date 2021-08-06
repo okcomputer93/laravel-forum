@@ -8,6 +8,12 @@ window.Vue = require('vue').default;
 
 require('./bootstrap');
 
+window.Vue.prototype.authorize = (handler) => {
+    // Additional admin privileges.
+
+    return handler(window.App.userId);
+}
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -21,7 +27,8 @@ require('./bootstrap');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('flash', require('./components/Flash.vue').default);
-Vue.component('reply', require('./components/Reply.vue').default);
+Vue.component('thread-view', require('./components/pages/Thread').default);
+Vue.component('replies', require('./components/Replies').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
