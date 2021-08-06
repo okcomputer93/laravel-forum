@@ -15,10 +15,17 @@ class RepliesController extends Controller
             'body' => ['required']
         ]);
 
-        $thread->addReply([
+        $reply = $thread->addReply([
             'body' => request('body'),
             'user_id' => auth()->id()
         ]);
+
+        if ($request->expectsJson()) {
+            // The key difference is that with() eager loads the related model up front,
+            // immediately after the initial query (all(), first(), or find(x), for example);
+            // when using load(), you run the initial query first, and then eager load the relation at some later point.
+            return $reply->load('owner');
+        }
 
         return redirect($thread->path())
             ->with('flash', 'Your reply has been left.');

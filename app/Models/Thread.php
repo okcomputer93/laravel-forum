@@ -63,6 +63,6 @@ class Thread extends Model
             ['thread_id' => $this->id]
         );
 
-        $this->replies()->forceCreate($reply);
+        return $this->replies()->forceCreate($reply);
     }
 }

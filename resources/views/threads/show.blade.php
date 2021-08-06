@@ -29,27 +29,14 @@
                         </div>
                     </div>
 
-                    <replies :data="{{ $thread->replies }}" @removed="repliesCount--"></replies>
+                    <replies :data="{{ $thread->replies }}"
+                             @removed="repliesCount--"
+                             @added="repliesCount++"
+                    ></replies>
 
                     <div class="mt-4">
                         {{ $replies->links() }}
                     </div>
-
-                    @auth
-                        <form class="mt-4" method="POST" action="{{ $thread->path() . '/replies' }}">
-                            @csrf
-                            <div class="form-group">
-                                <textarea placeholder="Have something to say?" name="body" id="body" rows="5"
-                                          class="form-control"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Post</button>
-                        </form>
-                    @endauth
-
-                    @guest
-                        <p class="text-center mt-4">Please <a href="{{ route('login') }}">sign in</a> to participate in this
-                            discussion.</p>
-                    @endguest
 
                 </div>
 
